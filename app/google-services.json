@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "893420576025",
+    "project_id": "moviesseries-89949",
+    "storage_bucket": "moviesseries-89949.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893420576025:android:d46f397cbfe7316809b988",
+        "android_client_info": {
+          "package_name": "com.micosi.moviesseries"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893420576025-r80ea8c2m7tqmfqhpj5e1eno0rsrgcne.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkFAiPFmNc2SsEVrRY60si0FLhTkgvRxs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "893420576025-r80ea8c2m7tqmfqhpj5e1eno0rsrgcne.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

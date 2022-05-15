@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/moviesUnseenFragment"
+        android:icon="@drawable/ic_watch"
+        android:title="@string/to_watch" />
+    <item
+        android:id="@+id/moviesSeenFragment"
+        android:icon="@drawable/ic_check"
+        android:title="@string/seen" />
+</menu>

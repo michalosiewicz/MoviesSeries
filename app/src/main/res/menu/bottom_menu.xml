@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/seriesUnseenFragment"
+        android:icon="@drawable/ic_series"
+        android:title="@string/series" />
+    <item
+        android:id="@+id/moviesUnseenFragment"
+        android:icon="@drawable/ic_movie"
+        android:title="@string/movies" />
+    <item
+        android:id="@+id/searchingSeriesFragment"
+        android:icon="@drawable/ic_search"
+        android:title="@string/search" />
+
+    <item
+        android:icon="@drawable/ic_log_out"
+        android:title="@string/log_out" />
+</menu>
