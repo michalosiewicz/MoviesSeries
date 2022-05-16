@@ -3,25 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/logInFragment">
+    app:startDestination="@id/seriesUnseenFragment2">
 
-    <fragment
-        android:id="@+id/logInFragment"
-        android:name="com.micosi.moviesseries.ui.login.LoginFragment"
-        android:label="fragment_log_in"
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/action_logInFragment_to_seriesUnseenFragment"
-            app:destination="@id/seriesUnseenFragment" />
-        <action
-            android:id="@+id/action_logInFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/seriesUnseenFragment"
-        android:name="com.micosi.moviesseries.ui.series.seriesunseen.SeriesUnseenFragment"
-        android:label="fragment_series_unseen"
-        tools:layout="@layout/fragment_series_unseen" />
     <fragment
         android:id="@+id/searchingSeriesFragment"
         android:name="com.micosi.moviesseries.ui.searching.searchingseries.SearchingSeriesFragment"
@@ -48,12 +31,8 @@
         android:label="fragment_movies_seen"
         tools:layout="@layout/fragment_movies_seen" />
     <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.micosi.moviesseries.ui.register.RegisterFragment"
-        android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
-        <action
-            android:id="@+id/action_registerFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
-    </fragment>
+        android:id="@+id/seriesUnseenFragment2"
+        android:name="com.micosi.moviesseries.ui.series.seriesunseen.SeriesUnseenFragment"
+        android:label="fragment_series_unseen"
+        tools:layout="@layout/fragment_series_unseen" />
 </navigation>

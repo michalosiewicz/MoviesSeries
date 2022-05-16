@@ -36,11 +36,11 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.registerSuccess.observe(viewLifecycleOwner) {
-            findNavController().navigate(R.id.action_registerFragment_to_logInFragment)
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
 
         binding.toLogin.setOnClickListener {
-            findNavController().navigate(R.id.action_registerFragment_to_logInFragment)
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
     }
 }

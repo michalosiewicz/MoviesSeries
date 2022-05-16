@@ -1,4 +1,4 @@
-package com.micosi.moviesseries.ui
+package com.micosi.moviesseries.ui.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -40,7 +40,7 @@ class LoginFragment : Fragment() {
         }
 
         binding.toRegister.setOnClickListener {
-            findNavController().navigate(R.id.action_logInFragment_to_registerFragment)
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
     }
 
@@ -53,6 +53,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun navigateToApp() {
-        findNavController().navigate(R.id.action_logInFragment_to_seriesUnseenFragment)
+        //findNavController().navigate(R.id.action_logInFragment_to_seriesUnseenFragment)
     }
 }
