@@ -44,14 +44,14 @@ class SeriesSeenFragment : Fragment() {
             deleteDialog.show({ viewModel.deleteSeries(movie) }, movie.title)
         }
 
-        binding.bottomNav.setupWithNavController(findNavController())
+        //binding.bottomNav.setupWithNavController(findNavController())
         binding.topNav.setupWithNavController(findNavController())
     }
 
     override fun onStart() {
         super.onStart()
 
-        binding.bottomNav.selectedItemId = R.id.seriesUnseenFragment
+        //binding.bottomNav.selectedItemId = R.id.seriesUnseenFragment
         binding.topNav.selectedItemId = R.id.seriesSeenFragment
     }
 }

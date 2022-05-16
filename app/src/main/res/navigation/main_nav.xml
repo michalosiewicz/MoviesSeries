@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/seriesUnseenFragment">
+
+    <fragment
+        android:id="@+id/seriesUnseenFragment"
+        android:name="com.micosi.moviesseries.ui.series.seriesunseen.SeriesUnseenFragment"
+        android:label="fragment_series_unseen"
+        tools:layout="@layout/fragment_series_unseen" />
+    <fragment
+        android:id="@+id/seriesSeenFragment"
+        android:name="com.micosi.moviesseries.ui.series.seriesseen.SeriesSeenFragment"
+        android:label="fragment_series_seen"
+        tools:layout="@layout/fragment_series_seen" />
+    <fragment
+        android:id="@+id/moviesUnseenFragment"
+        android:name="com.micosi.moviesseries.ui.movies.moviesunseen.MoviesUnseenFragment"
+        android:label="fragment_movies_unseen"
+        tools:layout="@layout/fragment_movies_unseen" />
+    <fragment
+        android:id="@+id/moviesSeenFragment"
+        android:name="com.micosi.moviesseries.ui.movies.moviesseen.MoviesSeenFragment"
+        android:label="fragment_movies_seen"
+        tools:layout="@layout/fragment_movies_seen" />
+    <fragment
+        android:id="@+id/searchingSeriesFragment"
+        android:name="com.micosi.moviesseries.ui.searching.searchingseries.SearchingSeriesFragment"
+        android:label="fragment_searching_series"
+        tools:layout="@layout/fragment_searching_series" />
+    <fragment
+        android:id="@+id/searchingMoviesFragment"
+        android:name="com.micosi.moviesseries.ui.searching.searchingmovies.SearchingMoviesFragment"
+        android:label="fragment_searching_movies"
+        tools:layout="@layout/fragment_searching_movies" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.micosi.moviesseries.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>
