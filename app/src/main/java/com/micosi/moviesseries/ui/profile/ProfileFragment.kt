@@ -11,10 +11,12 @@ import com.micosi.moviesseries.R
 import com.micosi.moviesseries.databinding.FragmentProfileBinding
 import com.micosi.moviesseries.ui.activities.MainActivity
 import com.micosi.moviesseries.ui.activities.RegisterActivity
+import com.micosi.moviesseries.ui.providers.LogOutDialogProvider
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
+    private lateinit var logOutDialogProvider: LogOutDialogProvider
     private val viewModel = ProfileViewModel()
 
     override fun onCreateView(
@@ -28,6 +30,8 @@ class ProfileFragment : Fragment() {
             false
         )
 
+        logOutDialogProvider = LogOutDialogProvider(requireContext())
+
         return binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@ProfileFragment.viewModel
@@ -38,7 +42,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.logOut.observe(viewLifecycleOwner) {
-            startRegisterActivity()
+            logOutDialogProvider.show { startRegisterActivity() }
         }
     }
 

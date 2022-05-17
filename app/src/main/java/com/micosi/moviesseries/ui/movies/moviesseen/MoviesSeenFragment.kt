@@ -10,13 +10,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.micosi.moviesseries.R
 import com.micosi.moviesseries.databinding.FragmentMoviesSeenBinding
-import com.micosi.moviesseries.ui.providers.DeleteDialogProvider
+import com.micosi.moviesseries.ui.providers.DeleteMovieDialogProvider
 
 class MoviesSeenFragment : Fragment() {
 
     private lateinit var binding: FragmentMoviesSeenBinding
     private val viewModel = MoviesSeenViewModel()
-    private lateinit var deleteDialog: DeleteDialogProvider
+    private lateinit var deleteMovieDialog: DeleteMovieDialogProvider
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +29,7 @@ class MoviesSeenFragment : Fragment() {
             false
         )
 
-        deleteDialog = DeleteDialogProvider(requireContext(), "Movie")
+        deleteMovieDialog = DeleteMovieDialogProvider(requireContext(), "Movie")
 
         return binding.apply {
             lifecycleOwner = viewLifecycleOwner
@@ -41,7 +41,7 @@ class MoviesSeenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.deleteMovie.observe(viewLifecycleOwner) { movie ->
-            deleteDialog.show({ viewModel.deleteMovie(movie) }, movie.title)
+            deleteMovieDialog.show({ viewModel.deleteMovie(movie) }, movie.title)
         }
 
         binding.topNav.setupWithNavController(findNavController())
