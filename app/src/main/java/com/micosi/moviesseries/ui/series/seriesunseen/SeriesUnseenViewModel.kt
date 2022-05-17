@@ -9,6 +9,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.micosi.moviesseries.db.DBReference
+import com.micosi.moviesseries.db.DBReference.authFB
 import com.micosi.moviesseries.models.Movie
 import com.micosi.moviesseries.models.State
 import com.micosi.moviesseries.repositoris.db.SeriesUnseenRepository
@@ -33,11 +34,7 @@ class SeriesUnseenViewModel : ViewModel() {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                val listMovies = mutableListOf<Movie>()
-                for (row in snapshot.children) {
-                    listMovies.add(row.getValue(Movie::class.java)!!)
-                }
-                moviesAdapter.addNewItems(listMovies)
+                moviesAdapter.addNewItems(seriesUnseenRepository.getData(snapshot))
             }
         })
     }

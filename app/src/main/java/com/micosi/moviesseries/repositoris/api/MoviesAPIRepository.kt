@@ -2,9 +2,11 @@ package com.micosi.moviesseries.repositoris.api
 
 import com.micosi.moviesseries.api.RetrofitInstance
 import com.micosi.moviesseries.db.DBReference
+import com.micosi.moviesseries.db.DBReference.authFB
 import com.micosi.moviesseries.mappers.ApiMovieToListMovieMapper
 import com.micosi.moviesseries.models.Movie
 import com.micosi.moviesseries.models.State
+import java.util.*
 
 class MoviesAPIRepository {
 
@@ -27,7 +29,8 @@ class MoviesAPIRepository {
 
     fun addSeriesToDB(movie: Movie): State<String> {
         return try {
-            DBReference.seriesUnseenReference.child(movie.title).setValue(movie)
+            DBReference.seriesUnseenReference.child(authFB.currentUser!!.uid + movie.title)
+                .setValue(movie)
             State.Success("Correct addition")
         } catch (e: Exception) {
             State.Error("Connection error")
@@ -36,7 +39,8 @@ class MoviesAPIRepository {
 
     fun addMovieToDB(movie: Movie): State<String> {
         return try {
-            DBReference.moviesUnseenReference.child(movie.title).setValue(movie)
+            DBReference.moviesUnseenReference.child(authFB.currentUser!!.uid + movie.title)
+                .setValue(movie)
             State.Success("Correct addition")
         } catch (e: Exception) {
             State.Error("Connection error")

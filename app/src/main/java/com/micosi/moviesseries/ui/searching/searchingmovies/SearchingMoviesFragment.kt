@@ -37,14 +37,12 @@ class SearchingMoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       // binding.bottomNav.setupWithNavController(findNavController())
         binding.topNav.setupWithNavController(findNavController())
     }
 
     override fun onStart() {
         super.onStart()
 
-       // binding.bottomNav.selectedItemId = R.id.searchingSeriesFragment
         binding.topNav.selectedItemId = R.id.searchingMoviesFragment
     }
 }

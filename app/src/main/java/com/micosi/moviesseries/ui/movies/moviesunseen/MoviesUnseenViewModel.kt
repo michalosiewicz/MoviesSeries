@@ -33,11 +33,7 @@ class MoviesUnseenViewModel : ViewModel() {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                val listMovies = mutableListOf<Movie>()
-                for (row in snapshot.children) {
-                    listMovies.add(row.getValue(Movie::class.java)!!)
-                }
-                moviesAdapter.addNewItems(listMovies)
+                moviesAdapter.addNewItems(moviesUnseenRepository.getData(snapshot))
             }
         })
     }
