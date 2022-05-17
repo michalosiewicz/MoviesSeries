@@ -35,6 +35,4 @@ class LoginViewModel : ViewModel() {
                 }
         }
     }
-
-    fun isCurrentUser() = authFB.currentUser != null
 }

@@ -1,5 +1,6 @@
 package com.micosi.moviesseries.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.micosi.moviesseries.R
 import com.micosi.moviesseries.databinding.FragmentLoginBinding
+import com.micosi.moviesseries.ui.activities.MainActivity
 
 class LoginFragment : Fragment() {
 
@@ -44,15 +46,10 @@ class LoginFragment : Fragment() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        if (viewModel.isCurrentUser()) {
-            navigateToApp()
-        }
-    }
-
     private fun navigateToApp() {
-        //findNavController().navigate(R.id.action_logInFragment_to_seriesUnseenFragment)
+        val intent = Intent(context, MainActivity::class.java).apply {
+            flags = (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        }
+        startActivity(intent)
     }
 }
