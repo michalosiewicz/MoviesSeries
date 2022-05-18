@@ -41,7 +41,9 @@ class SeriesUnseenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.deleteMovie.observe(viewLifecycleOwner) { movie ->
-            deleteMovieDialog.show({ viewModel.deleteSeries(movie) }, movie.title)
+            if (movie != null) {
+                deleteMovieDialog.show({ viewModel.deleteSeries(movie) }, movie.title)
+            }
         }
 
         binding.topNav.setupWithNavController(findNavController())

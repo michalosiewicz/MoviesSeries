@@ -1,7 +1,6 @@
 package com.micosi.moviesseries.ui.series.seriesunseen
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +8,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.micosi.moviesseries.db.DBReference
-import com.micosi.moviesseries.db.DBReference.authFB
 import com.micosi.moviesseries.models.Movie
 import com.micosi.moviesseries.models.State
 import com.micosi.moviesseries.repositoris.db.SeriesUnseenRepository
@@ -24,8 +22,8 @@ class SeriesUnseenViewModel : ViewModel() {
 
     private val seriesUnseenRepository = SeriesUnseenRepository()
 
-    private val _deleteMovie = MutableLiveData<Movie>()
-    val deleteMovie: LiveData<Movie>
+    private val _deleteMovie = MutableLiveData<Movie?>()
+    val deleteMovie: MutableLiveData<Movie?>
         get() = _deleteMovie
 
     init {
@@ -53,6 +51,7 @@ class SeriesUnseenViewModel : ViewModel() {
 
     private fun showDeleteDialog(movie: Movie) {
         _deleteMovie.value = movie
+        _deleteMovie.value = null
     }
 
     fun deleteSeries(movie: Movie) {
