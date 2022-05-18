@@ -7,9 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.micosi.moviesseries.R
 import com.micosi.moviesseries.databinding.FragmentProfileBinding
-import com.micosi.moviesseries.ui.activities.MainActivity
 import com.micosi.moviesseries.ui.activities.RegisterActivity
 import com.micosi.moviesseries.ui.providers.LogOutDialogProvider
 
@@ -41,12 +42,13 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.logOut.observe(viewLifecycleOwner) {
+        binding.logOut.setOnClickListener {
             logOutDialogProvider.show { startRegisterActivity() }
         }
     }
 
     private fun startRegisterActivity() {
+        Firebase.auth.signOut()
         val intent = Intent(context, RegisterActivity::class.java).apply {
             flags = (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }
