@@ -10,13 +10,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.micosi.moviesseries.R
 import com.micosi.moviesseries.databinding.FragmentMoviesUnseenBinding
+import com.micosi.moviesseries.ui.extensions.showSnackBar
 import com.micosi.moviesseries.ui.providers.DeleteMovieDialogProvider
+import com.micosi.moviesseries.ui.providers.SnackBarProvider
 
 class MoviesUnseenFragment : Fragment() {
 
     private lateinit var binding: FragmentMoviesUnseenBinding
     private val viewModel = MoviesUnseenViewModel()
     private lateinit var deleteMovieDialog: DeleteMovieDialogProvider
+    private lateinit var snackBarProvider: SnackBarProvider
 
 
     override fun onCreateView(
@@ -30,7 +33,11 @@ class MoviesUnseenFragment : Fragment() {
             false
         )
 
-        deleteMovieDialog = DeleteMovieDialogProvider(requireContext(), "Movie")
+        deleteMovieDialog = DeleteMovieDialogProvider(
+            requireContext(),
+            "Movie"
+        )
+        snackBarProvider = SnackBarProvider(requireActivity())
 
         return binding.apply {
             lifecycleOwner = viewLifecycleOwner
@@ -41,8 +48,12 @@ class MoviesUnseenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.deleteMovie.observe(viewLifecycleOwner) { movie ->
+        viewModel.showDialog.observe(viewLifecycleOwner) { movie ->
             deleteMovieDialog.show({ viewModel.deleteMovie(movie) }, movie.title)
+        }
+
+        viewModel.showSnackBar.observe(viewLifecycleOwner) { values ->
+            snackBarProvider.showSnackBar(values.first, values.second)
         }
 
         binding.topNav.setupWithNavController(findNavController())

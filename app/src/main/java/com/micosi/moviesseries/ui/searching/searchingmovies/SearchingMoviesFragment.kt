@@ -11,10 +11,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.micosi.moviesseries.R
 import com.micosi.moviesseries.databinding.FragmentSearchingMoviesBinding
+import com.micosi.moviesseries.ui.extensions.showSnackBar
+import com.micosi.moviesseries.ui.providers.SnackBarProvider
 
 class SearchingMoviesFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchingMoviesBinding
+    private lateinit var snackBarProvider: SnackBarProvider
     private val viewModel = SearchingMoviesViewModel()
 
     override fun onCreateView(
@@ -28,6 +31,8 @@ class SearchingMoviesFragment : Fragment() {
             false
         )
 
+        snackBarProvider = SnackBarProvider(requireActivity())
+
         return binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@SearchingMoviesFragment.viewModel
@@ -36,6 +41,10 @@ class SearchingMoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.showSnackBar.observe(viewLifecycleOwner) { values ->
+            snackBarProvider.showSnackBar(values.first, values.second)
+        }
 
         binding.topNav.setupWithNavController(findNavController())
     }

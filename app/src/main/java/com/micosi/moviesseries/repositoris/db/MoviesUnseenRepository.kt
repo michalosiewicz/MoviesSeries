@@ -10,9 +10,9 @@ class MoviesUnseenRepository : DBRepository {
         return try {
             DBReference.moviesUnseenReference.child(DBReference.authFB.currentUser!!.uid + movie.title)
                 .removeValue()
-            State.Success("Correct addition")
+            State.Success("The movie has been successfully removed.")
         } catch (e: Exception) {
-            State.Error("Connection error")
+            State.Error("The movie could not be deleted.")
         }
     }
 
@@ -22,9 +22,9 @@ class MoviesUnseenRepository : DBRepository {
                 .setValue(movie)
             DBReference.moviesUnseenReference.child(DBReference.authFB.currentUser!!.uid + movie.title)
                 .removeValue()
-            State.Success("Correct addition")
+            State.Success("The movie has been successfully transfer.")
         } catch (e: Exception) {
-            State.Error("Connection error")
+            State.Error("The movie could not be transfer.")
         }
     }
 }

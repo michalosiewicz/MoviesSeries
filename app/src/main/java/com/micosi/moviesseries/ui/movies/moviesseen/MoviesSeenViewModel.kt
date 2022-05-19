@@ -27,11 +27,25 @@ class MoviesSeenViewModel : ViewModel() {
 
     private val moviesSeenRepository = MoviesSeenRepository()
 
-    private val _deleteMovie = MutableLiveData<Movie>()
-    val deleteMovie: LiveData<Movie>
-        get() = _deleteMovie
+    private val _showDialog = MutableLiveData<Movie>()
+    val showDialog: LiveData<Movie>
+        get() = _showDialog
+
+    private val _showSnackBar = MutableLiveData<Pair<Boolean, String>>()
+    val showSnackBar: MutableLiveData<Pair<Boolean, String>>
+        get() = _showSnackBar
 
     init {
+        getData()
+    }
+
+    fun deleteMovie(movie: Movie) {
+        viewModelScope.launch(Dispatchers.IO) {
+            handleState(moviesSeenRepository.deleteMovie(movie))
+        }
+    }
+
+    private fun getData() {
         DBReference.moviesSeenReference.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
             }
@@ -44,29 +58,20 @@ class MoviesSeenViewModel : ViewModel() {
 
     private fun addToSeen(movie: Movie) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = moviesSeenRepository.statusChanges(movie)
-            if (response is State.Success) {
-                Log.d("Test", response.data)
-            }
-            if (response is State.Error) {
-                Log.d("Test", response.message)
-            }
+            handleState(moviesSeenRepository.statusChanges(movie))
         }
     }
 
     private fun showDeleteDialog(movie: Movie) {
-        _deleteMovie.value = movie
+        _showDialog.value = movie
     }
 
-    fun deleteMovie(movie: Movie) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val response = moviesSeenRepository.deleteMovie(movie)
-            if (response is State.Success) {
-                Log.d("Test", response.data)
-            }
-            if (response is State.Error) {
-                Log.d("Test", response.message)
-            }
+    private fun handleState(state: State<String>) {
+        if (state is State.Success) {
+            _showSnackBar.postValue(Pair(true, state.data))
+        }
+        if (state is State.Error) {
+            _showSnackBar.postValue(Pair(false, state.message))
         }
     }
 }

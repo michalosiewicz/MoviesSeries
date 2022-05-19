@@ -10,9 +10,9 @@ class SeriesSeenRepository : DBRepository {
         return try {
             DBReference.seriesSeenReference.child(DBReference.authFB.currentUser!!.uid + movie.title)
                 .removeValue()
-            State.Success("Correct addition")
+            State.Success("The series has been successfully removed.")
         } catch (e: Exception) {
-            State.Error("Connection error")
+            State.Error("The series could not be deleted.")
         }
     }
 
@@ -22,9 +22,9 @@ class SeriesSeenRepository : DBRepository {
                 .setValue(movie)
             DBReference.seriesSeenReference.child(DBReference.authFB.currentUser!!.uid + movie.title)
                 .removeValue()
-            State.Success("Correct addition")
+            State.Success("The series has been successfully transfer.")
         } catch (e: Exception) {
-            State.Error("Connection error")
+            State.Error("The series could not be transfer.")
         }
     }
 }

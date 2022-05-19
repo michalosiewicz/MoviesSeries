@@ -1,6 +1,5 @@
 package com.micosi.moviesseries.ui.searching.searchingmovies
 
-import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,6 +15,11 @@ import kotlinx.coroutines.withContext
 class SearchingMoviesViewModel : ViewModel() {
 
     private val moviesAPIRepository = MoviesAPIRepository()
+
+    private val _showSnackBar = MutableLiveData<Pair<Boolean, String>>()
+    val showSnackBar: MutableLiveData<Pair<Boolean, String>>
+        get() = _showSnackBar
+
     val moviesAdapter = MoviesApiAdapter { movie -> addMoviesToDB(movie) }
 
     val title = MutableLiveData("")
@@ -40,13 +44,16 @@ class SearchingMoviesViewModel : ViewModel() {
 
     private fun addMoviesToDB(movie: Movie) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = moviesAPIRepository.addMovieToDB(movie)
-            if (response is State.Success) {
-                Log.d("Test", response.data)
-            }
-            if (response is State.Error) {
-                Log.d("Test", response.message)
-            }
+            handleState(moviesAPIRepository.addMovieToDB(movie))
+        }
+    }
+
+    private fun handleState(state: State<String>) {
+        if (state is State.Success) {
+            _showSnackBar.postValue(Pair(true, state.data))
+        }
+        if (state is State.Error) {
+            _showSnackBar.postValue(Pair(false, state.message))
         }
     }
 }

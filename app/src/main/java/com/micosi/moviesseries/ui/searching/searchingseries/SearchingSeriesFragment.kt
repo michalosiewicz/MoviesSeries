@@ -1,7 +1,6 @@
 package com.micosi.moviesseries.ui.searching.searchingseries
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +10,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.micosi.moviesseries.R
 import com.micosi.moviesseries.databinding.FragmentSearchingSeriesBinding
+import com.micosi.moviesseries.ui.extensions.showSnackBar
+import com.micosi.moviesseries.ui.providers.SnackBarProvider
 
 class SearchingSeriesFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchingSeriesBinding
+    private lateinit var snackBarProvider: SnackBarProvider
     private val viewModel = SearchingSeriesViewModel()
 
     override fun onCreateView(
@@ -28,6 +30,8 @@ class SearchingSeriesFragment : Fragment() {
             false
         )
 
+        snackBarProvider = SnackBarProvider(requireActivity())
+
         return binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@SearchingSeriesFragment.viewModel
@@ -36,6 +40,10 @@ class SearchingSeriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.showSnackBar.observe(viewLifecycleOwner) { values ->
+            snackBarProvider.showSnackBar(values.first, values.second)
+        }
 
         binding.topNav.setupWithNavController(findNavController())
     }

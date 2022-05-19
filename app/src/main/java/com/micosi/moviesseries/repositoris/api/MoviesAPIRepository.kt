@@ -31,9 +31,9 @@ class MoviesAPIRepository {
         return try {
             DBReference.seriesUnseenReference.child(authFB.currentUser!!.uid + movie.title)
                 .setValue(movie)
-            State.Success("Correct addition")
+            State.Success("The series has been successfully add.")
         } catch (e: Exception) {
-            State.Error("Connection error")
+            State.Error("The series could not be added.")
         }
     }
 
@@ -41,9 +41,9 @@ class MoviesAPIRepository {
         return try {
             DBReference.moviesUnseenReference.child(authFB.currentUser!!.uid + movie.title)
                 .setValue(movie)
-            State.Success("Correct addition")
+            State.Success("The movie has been successfully add.")
         } catch (e: Exception) {
-            State.Error("Connection error")
+            State.Error("The movie could not be added")
         }
     }
 }

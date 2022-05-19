@@ -1,6 +1,5 @@
 package com.micosi.moviesseries.ui.series.seriesseen
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,11 +26,25 @@ class SeriesSeenViewModel : ViewModel() {
 
     private val seriesSeenRepository = SeriesSeenRepository()
 
-    private val _deleteMovie = MutableLiveData<Movie>()
-    val deleteMovie: LiveData<Movie>
-        get() = _deleteMovie
+    private val _showDialog = MutableLiveData<Movie>()
+    val showDialog: LiveData<Movie>
+        get() = _showDialog
+
+    private val _showSnackBar = MutableLiveData<Pair<Boolean, String>>()
+    val showSnackBar: MutableLiveData<Pair<Boolean, String>>
+        get() = _showSnackBar
 
     init {
+        getData()
+    }
+
+    fun deleteSeries(movie: Movie) {
+        viewModelScope.launch(Dispatchers.IO) {
+            handleState(seriesSeenRepository.deleteMovie(movie))
+        }
+    }
+
+    private fun getData() {
         DBReference.seriesSeenReference.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
             }
@@ -44,29 +57,20 @@ class SeriesSeenViewModel : ViewModel() {
 
     private fun addToUnseen(movie: Movie) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = seriesSeenRepository.statusChanges(movie)
-            if (response is State.Success) {
-                Log.d("Test", response.data)
-            }
-            if (response is State.Error) {
-                Log.d("Test", response.message)
-            }
+            handleState(seriesSeenRepository.statusChanges(movie))
         }
     }
 
     private fun showDeleteDialog(movie: Movie) {
-        _deleteMovie.value = movie
+        _showDialog.value = movie
     }
 
-    fun deleteSeries(movie: Movie) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val response = seriesSeenRepository.deleteMovie(movie)
-            if (response is State.Success) {
-                Log.d("Test", response.data)
-            }
-            if (response is State.Error) {
-                Log.d("Test", response.message)
-            }
+    private fun handleState(state: State<String>) {
+        if (state is State.Success) {
+            _showSnackBar.postValue(Pair(true, state.data))
+        }
+        if (state is State.Error) {
+            _showSnackBar.postValue(Pair(false, state.message))
         }
     }
 }
