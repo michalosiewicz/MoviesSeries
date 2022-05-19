@@ -1,5 +1,6 @@
 package com.micosi.moviesseries.ui.searching.searchingmovies
 
+import android.view.View
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,14 +24,19 @@ class SearchingMoviesViewModel : ViewModel() {
     val moviesAdapter = MoviesApiAdapter { movie -> addMoviesToDB(movie) }
 
     val title = MutableLiveData("")
+    val visible = MutableLiveData(View.GONE)
 
     val isTitleNotEmpty = MediatorLiveData<Boolean>().apply {
         addSource(title) { title ->
-            value = title.isNotEmpty()
+            value = title.isNotEmpty() && visible.value == View.GONE
+        }
+        addSource(visible) { visible ->
+            value = title.value!!.isNotEmpty() && visible == View.GONE
         }
     }
 
     fun getMovies() {
+        visible.value = View.VISIBLE
         val query = title.value!!
         viewModelScope.launch(Dispatchers.IO) {
             val state = moviesAPIRepository.getMovies(query, "movies")
@@ -38,12 +44,16 @@ class SearchingMoviesViewModel : ViewModel() {
                 withContext(Dispatchers.Main) {
                     moviesAdapter.addNewItems(state.data)
                 }
+                visible.postValue(View.GONE)
             }
             if (state is State.Error) {
+                withContext(Dispatchers.Main) {
+                    moviesAdapter.addNewItems(emptyList())
+                }
                 _showSnackBar.postValue(Pair(false, state.message))
+                visible.postValue(View.GONE)
             }
         }
-        isTitleNotEmpty.value = false
     }
 
     private fun addMoviesToDB(movie: Movie) {
