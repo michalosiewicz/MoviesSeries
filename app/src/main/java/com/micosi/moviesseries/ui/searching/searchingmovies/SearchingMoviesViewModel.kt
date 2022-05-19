@@ -33,13 +33,17 @@ class SearchingMoviesViewModel : ViewModel() {
     fun getMovies() {
         val query = title.value!!
         viewModelScope.launch(Dispatchers.IO) {
-            val listMovies = moviesAPIRepository.getMovies(query, "movies")
-            if (listMovies is State.Success) {
+            val state = moviesAPIRepository.getMovies(query, "movies")
+            if (state is State.Success) {
                 withContext(Dispatchers.Main) {
-                    moviesAdapter.addNewItems(listMovies.data)
+                    moviesAdapter.addNewItems(state.data)
                 }
             }
+            if (state is State.Error) {
+                _showSnackBar.postValue(Pair(false, state.message))
+            }
         }
+        isTitleNotEmpty.value = false
     }
 
     private fun addMoviesToDB(movie: Movie) {

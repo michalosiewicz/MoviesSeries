@@ -6,7 +6,6 @@ import com.micosi.moviesseries.db.DBReference.authFB
 import com.micosi.moviesseries.mappers.ApiMovieToListMovieMapper
 import com.micosi.moviesseries.models.Movie
 import com.micosi.moviesseries.models.State
-import java.util.*
 
 class MoviesAPIRepository {
 
@@ -16,11 +15,16 @@ class MoviesAPIRepository {
         return try {
             val response = RetrofitInstance.retrofit.getMovies(type, title)
             if (response.isSuccessful) {
-                State.Success(
-                    apiMovieToListMovieMapper.map(response.body())
-                )
+                val listMovies = apiMovieToListMovieMapper.map(response.body())
+                if (listMovies.isNotEmpty()) {
+                    State.Success(
+                        listMovies
+                    )
+                } else {
+                    State.Error("No results")
+                }
             } else {
-                State.Error(response.message())
+                State.Error("Connection error")
             }
         } catch (e: Exception) {
             State.Error("Connection error")
