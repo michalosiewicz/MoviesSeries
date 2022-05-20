@@ -16,7 +16,7 @@ class SnackBarProvider(private val activity: Activity) {
         showSnackBar(message, R.color.red)
     }
 
-    fun showSnackBar(message: String, @ColorRes color: Int) {
+    private fun showSnackBar(message: String, @ColorRes color: Int) {
         val snackBar = Snackbar.make(
             activity.findViewById(android.R.id.content),
             message,

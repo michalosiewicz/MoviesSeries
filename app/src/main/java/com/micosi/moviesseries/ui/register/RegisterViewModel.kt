@@ -1,6 +1,5 @@
 package com.micosi.moviesseries.ui.register
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.micosi.moviesseries.db.DBReference.authFB
 import kotlinx.coroutines.Dispatchers
@@ -11,9 +10,9 @@ class RegisterViewModel : ViewModel() {
     val email = MutableLiveData("")
     val password = MutableLiveData("")
 
-    private val _registerInSuccess = MutableLiveData<String>()
-    val registerSuccess: LiveData<String>
-        get() = _registerInSuccess
+    private val _register = MutableLiveData<Pair<Boolean, String>>()
+    val register: LiveData<Pair<Boolean, String>>
+        get() = _register
 
     val areInputsNotEmpty = MediatorLiveData<Boolean>().apply {
         addSource(email) {
@@ -28,10 +27,10 @@ class RegisterViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             authFB.createUserWithEmailAndPassword(email.value!!, password.value!!)
                 .addOnSuccessListener {
-                    _registerInSuccess.postValue("Correct")
+                    _register.postValue(Pair(true, "Registration was successful"))
                 }
                 .addOnFailureListener {
-                    Log.d("Test", "Fail")
+                    _register.postValue(Pair(false, "Incorrect data"))
                 }
         }
     }
