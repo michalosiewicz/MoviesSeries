@@ -11,10 +11,13 @@ import androidx.navigation.fragment.findNavController
 import com.micosi.moviesseries.R
 import com.micosi.moviesseries.databinding.FragmentLoginBinding
 import com.micosi.moviesseries.ui.activities.MainActivity
+import com.micosi.moviesseries.ui.extensions.showSnackBar
+import com.micosi.moviesseries.ui.providers.SnackBarProvider
 
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
+    private lateinit var snackBarProvider: SnackBarProvider
     private val viewModel = LoginViewModel()
 
     override fun onCreateView(
@@ -28,6 +31,8 @@ class LoginFragment : Fragment() {
             false
         )
 
+        snackBarProvider = SnackBarProvider(requireActivity())
+
         return binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = this@LoginFragment.viewModel
@@ -37,8 +42,12 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.loginSuccess.observe(viewLifecycleOwner) {
-            navigateToApp()
+        viewModel.login.observe(viewLifecycleOwner) { values ->
+            if (values.first) {
+                navigateToApp()
+            } else {
+                snackBarProvider.showError(values.second)
+            }
         }
 
         binding.toRegister.setOnClickListener {
