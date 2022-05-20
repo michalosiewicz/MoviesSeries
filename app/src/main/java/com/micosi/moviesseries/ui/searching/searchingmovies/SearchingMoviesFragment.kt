@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.micosi.moviesseries.R
 import com.micosi.moviesseries.databinding.FragmentSearchingMoviesBinding
+import com.micosi.moviesseries.ui.extensions.hideKeyboard
 import com.micosi.moviesseries.ui.extensions.showSnackBar
 import com.micosi.moviesseries.ui.providers.SnackBarProvider
 
@@ -44,6 +45,10 @@ class SearchingMoviesFragment : Fragment() {
 
         viewModel.showSnackBar.observe(viewLifecycleOwner) { values ->
             snackBarProvider.showSnackBar(values.first, values.second)
+        }
+
+        viewModel.findSuccess.observe(viewLifecycleOwner) {
+            requireActivity().hideKeyboard(view)
         }
 
         binding.topNav.setupWithNavController(findNavController())

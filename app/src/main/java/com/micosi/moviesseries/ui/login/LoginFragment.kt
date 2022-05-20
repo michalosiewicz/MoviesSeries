@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.micosi.moviesseries.R
 import com.micosi.moviesseries.databinding.FragmentLoginBinding
 import com.micosi.moviesseries.ui.activities.MainActivity
+import com.micosi.moviesseries.ui.extensions.hideKeyboard
 import com.micosi.moviesseries.ui.extensions.showSnackBar
 import com.micosi.moviesseries.ui.providers.SnackBarProvider
 
@@ -43,6 +44,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.login.observe(viewLifecycleOwner) { values ->
+            requireActivity().hideKeyboard(view)
             if (values.first) {
                 navigateToApp()
             } else {

@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:hint="@string/series"
-            android:inputType="text"
+            android:inputType="textCapSentences"
             android:text="@={viewModel.title}"
             app:layout_constraintBottom_toTopOf="@id/movieRecyclerView"
             app:layout_constraintRight_toLeftOf="@id/searchButton"

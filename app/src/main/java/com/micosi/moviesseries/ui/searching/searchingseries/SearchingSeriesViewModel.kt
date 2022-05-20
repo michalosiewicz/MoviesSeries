@@ -21,6 +21,10 @@ class SearchingSeriesViewModel : ViewModel() {
     val showSnackBar: MutableLiveData<Pair<Boolean, String>>
         get() = _showSnackBar
 
+    private val _findSuccess = MutableLiveData<String>()
+    val findSuccess: MutableLiveData<String>
+        get() = _findSuccess
+
     val moviesAdapter = MoviesApiAdapter { movie -> addSeriesToDB(movie) }
 
     val title = MutableLiveData("")
@@ -36,6 +40,7 @@ class SearchingSeriesViewModel : ViewModel() {
     }
 
     fun getSeries() {
+        _findSuccess.postValue("Success")
         visible.value = View.VISIBLE
         val query = title.value!!
         viewModelScope.launch(Dispatchers.IO) {

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.micosi.moviesseries.R
 import com.micosi.moviesseries.databinding.FragmentRegisterBinding
+import com.micosi.moviesseries.ui.extensions.hideKeyboard
 import com.micosi.moviesseries.ui.extensions.showSnackBar
 import com.micosi.moviesseries.ui.providers.SnackBarProvider
 
@@ -41,6 +42,7 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.register.observe(viewLifecycleOwner) { register ->
+            requireActivity().hideKeyboard(view)
             if (register.first) {
                 findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
             }
