@@ -63,16 +63,7 @@ class SearchingMoviesViewModel : ViewModel() {
 
     private fun addMoviesToDB(movie: Movie) {
         viewModelScope.launch(Dispatchers.IO) {
-            handleState(moviesAPIRepository.addMovieToDB(movie))
-        }
-    }
-
-    private fun handleState(state: State<String>) {
-        if (state is State.Success) {
-            _showSnackBar.postValue(Pair(true, state.data))
-        }
-        if (state is State.Error) {
-            _showSnackBar.postValue(Pair(false, state.message))
+            moviesAPIRepository.addMovieToDB(movie, _showSnackBar)
         }
     }
 }
